@@ -5,3 +5,5 @@ require 'wiredriver/common/util'
 
 require 'wiredriver/error/bridge_error'
 require 'wiredriver/error/webdriver_errors'
+
+require 'wiredriver/driver'

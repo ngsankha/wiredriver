@@ -34,13 +34,13 @@ module Wiredriver
       end
 
       def request(method, path, payload = nil)
-        url_params = { :host => @host, :port => @port, :path => @path }
+        url_params = { :host => @host, :port => @port, :path => path }
         if @scheme == :http
           current_url = URI::HTTP.build(url_params)
         else
           current_url = URI::HTTPS.build(url_params)
         end
-        @curl.url = current_url
+        @curl.url = current_url.to_s
         @curl.post_body = payload unless payload.nil?
         @curl.http method.to_s.upcase
         return @curl.status.to_i, @curl.body_str
