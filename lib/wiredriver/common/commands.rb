@@ -7,7 +7,7 @@ module Wiredriver
       "get_geolocation"            => ["GET",    "/session/:sessionId/location"],
       "flick"                      => ["POST",   "/session/:sessionId/touch/flick"],
       "long_click"                 => ["POST",   "/session/:sessionId/touch/longclick"],
-      "double_click"               => ["POST",   "/session/:sessionId/touch/doubleclick"],
+      "double_click_touch"         => ["POST",   "/session/:sessionId/touch/doubleclick"],
       "scroll"                     => ["POST",   "/session/:sessionId/touch/scroll"],
       "touch_move"                 => ["POST",   "/session/:sessionId/touch/move"],
       "touch_up"                   => ["POST",   "/session/:sessionId/touch/up"],
