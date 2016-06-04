@@ -66,7 +66,7 @@ describe 'Wiredriver::Common::Bridge' do
 
     context "sends a request" do
       it "uses the method and path that is passed with Content-Type application/json" do
-        stub_request(:get, "http://example.com/").
+        stub_request(:get, "http://example.com/abcd").
           with(:headers => {'Content-Type'=>'application/json'}).
           to_return(:status => 200, :body => "boom", :headers => {})
 
@@ -76,10 +76,10 @@ describe 'Wiredriver::Common::Bridge' do
       end
 
       it "writes the request body when specified" do
-        stub_request(:post, "http://example.com/").
-         with(:body => "some data",
-              :headers => {'Content-Type'=>'application/json'}).
-         to_return(:status => 200, :body => "success", :headers => {})
+        stub_request(:post, "http://example.com/data").
+          with(:body => "some data",
+               :headers => {'Content-Type'=>'application/json'}).
+          to_return(:status => 200, :body => "success", :headers => {})
 
         status, body = @bridge.request :post, "/data", "some data"
         expect(status).to eq(200)
@@ -89,10 +89,10 @@ describe 'Wiredriver::Common::Bridge' do
       it "uses basic auth when specified" do
         url = "http://test:abcd@example.com"
         @bridge = Bridge.new url
-        stub_request(:post, "http://example.com/").
-         with(:body => "some data",
-              :headers => {'Authorization'=>'Basic dGVzdDphYmNk', 'Content-Type'=>'application/json'}).
-         to_return(:status => 200, :body => "authed", :headers => {})
+        stub_request(:post, "http://example.com/data").
+          with(:body => "some data",
+               :headers => {'Authorization'=>'Basic dGVzdDphYmNk', 'Content-Type'=>'application/json'}).
+          to_return(:status => 200, :body => "authed", :headers => {})
 
         status, body = @bridge.request :post, "/data", "some data"
         expect(status).to eq(200)
@@ -106,14 +106,14 @@ describe 'Wiredriver::Common::Bridge' do
     end
 
     it "follows 30x redirects" do
-      stub_request(:post, "http://example.com/").
-       with(:body => "some data",
-            :headers => {'Content-Type'=>'application/json'}).
-       to_return(:status => 301, :body => "", :headers => {'Location'=>'/final'})
-      stub_request(:post, "http://example.com/").
-       with(:body => "some data",
-            :headers => {'Content-Type'=>'application/json'}).
-       to_return(:status => 200, :body => "yay!", :headers => {})
+      stub_request(:post, "http://example.com/redirect").
+        with(:body => "some data",
+             :headers => {'Content-Type'=>'application/json'}).
+        to_return(:status => 301, :body => "", :headers => {'Location'=>'example.com/final'})
+      stub_request(:post, "http://example.com/final").
+        with(:body => "some data",
+             :headers => {'Content-Type'=>'application/json'}).
+        to_return(:status => 200, :body => "yay!", :headers => {})
 
       status, body = @bridge.request :post, "/redirect", "some data"
       expect(status).to eq(200)

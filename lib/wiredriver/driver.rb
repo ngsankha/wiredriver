@@ -26,7 +26,6 @@ module Wiredriver
 
     def quit
       status, response_body = send_request("quit_session")
-      parse(response_body)
       nil
     end
 
