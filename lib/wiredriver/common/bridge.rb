@@ -16,7 +16,7 @@ module Wiredriver
         elsif parsed_uri.class == URI::HTTPS
           @scheme = :https
         else
-          raise Wiredriver::Error::BridgeError.new("Malformed URL cannot be parsed")
+          raise Wiredriver::Error::BridgeError.new "Malformed URL cannot be parsed"
         end
         @host = parsed_uri.host
         @port = parsed_uri.port

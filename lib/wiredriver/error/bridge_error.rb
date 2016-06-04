@@ -1,6 +1,6 @@
 module Wiredriver
   module Error
-    class BridgeError < Exception
+    class BridgeError < RuntimeError
     end
   end
 end
